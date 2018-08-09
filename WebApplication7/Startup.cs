@@ -59,6 +59,9 @@ namespace WebApplication7
                     template: $"{{controller}}/{{action}}");
             });
 
+            // original place:
+            //app.UseCookiePolicy();
+
             app.UseStaticFiles();
 
         }
