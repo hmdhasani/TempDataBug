@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,8 +26,16 @@ namespace WebApplication7
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddMemoryCache();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .AddDataAnnotationsLocalization()
+            .AddViewLocalization()
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //.AddSessionStateTempDataProvider();
+
+            services.AddSession();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,11 +49,18 @@ namespace WebApplication7
             {
                 app.UseExceptionHandler("/Error");
             }
+            app.UseSession();
+
+            app.UseCookiePolicy();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: $"{{controller}}/{{action}}");
+            });
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
-            app.UseMvc();
         }
     }
 }
