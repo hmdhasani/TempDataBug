@@ -6,13 +6,13 @@ namespace WebApplication7.Controllers
     {
         public ActionResult Index()
         {
-            TempData["A"] = 1;
+            TempData["A"] = "TempData Works!";
             return RedirectToAction("Index2");
         }
 
         public string Index2()
         {
-            return TempData != null ? (TempData["A"]?.ToString() ?? "No A") : "No temp";
+            return TempData != null ? (TempData["A"]?.ToString() ?? "No TempData Value") : "No TempData";
         }
     }
 }

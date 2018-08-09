@@ -51,7 +51,9 @@ namespace WebApplication7
             }
             app.UseSession();
 
+            // Moved To here:
             app.UseCookiePolicy();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -59,7 +61,7 @@ namespace WebApplication7
                     template: $"{{controller}}/{{action}}");
             });
 
-            // original place:
+            // Original place:
             //app.UseCookiePolicy();
 
             app.UseStaticFiles();
